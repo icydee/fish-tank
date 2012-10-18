@@ -5,22 +5,49 @@ use Moose;
 has creatures => (
     is      => 'rw',
     isa     => 'ArrayRef[MoonFruit::Simulator::Creature]',
+    default => sub {[]} ,
 );
 
 has food => (
     is      => 'rw',
     isa     => 'Int',
+    default => 0,
 );
 
 has temperature => (
     is      => 'rw',
     isa     => 'Int',
+    default => 20,
 );
 
 has depth => (
     is      => 'rw',
     isa     => 'Int',
+    default => 100,
 );
+
+use overload '""' => sub {
+    my ($self) = @_;
+
+    my $string;
+    $string  = "Tank object\n";
+    $string .= "  temperature = ".$self->temperature."\n";
+    $string .= "  water depth = ".$self->depth."\n";
+    $string .= "  fish food   = ".$self->food."\n";
+    $string .= " there are ".scalar(@{$self->creatures})." creatures in the tank\n";
+    foreach my $creature (@{$self->creatures}) {
+        $string .= $creature;
+    }
+    return $string;
+};
+
+sub add_creature {
+    my ($self, $creature) = @_;
+
+    my $creatures = $self->creatures;
+    push @$creatures, $creature;
+    $self->creatures($creatures);
+}
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
@@ -61,7 +88,17 @@ The current depth of the water in the tank (let's assume it is centimeters)
 
 =head1 METHODS
 
-TBD
+=head3 add_creature
+
+Add a single creature object to the tank.
+
+=head1 JOKE
+
+ Two fish in a tank.
+
+ One fish turns to the other and says...
+
+ 'Can you drive this thing?'
 
 =head1 AUTHORS
 

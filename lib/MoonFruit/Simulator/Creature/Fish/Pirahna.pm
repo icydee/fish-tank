@@ -4,6 +4,12 @@ use Moose;
 
 extends 'MoonFruit::Simulator::Creature::Fish';
 
+has type => (
+    is      => 'ro',
+    isa     => 'Str',
+    default => 'Pirahna Fish',
+);
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;

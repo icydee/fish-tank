@@ -4,6 +4,18 @@ use strict;
 use warnings;
 use Switch;
 
+use FindBin::libs;
+
+use MoonFruit::Simulator::Tank;
+use MoonFruit::Simulator::Creature::Snail;
+use MoonFruit::Simulator::Creature::Fish::Pirahna;
+use MoonFruit::Simulator::Creature::Fish::Sun;
+use MoonFruit::Simulator::Creature::Fish::Clockwork;
+use MoonFruit::Simulator::Creature::Fish::Diver;
+
+
+our $tank = MoonFruit::Simulator::Tank->new;
+
 print_help();
 
 while(1) {
@@ -19,32 +31,53 @@ while(1) {
         case 'temperature'  { set_temperature(@bits) }
         case 'depth'        { set_depth(@bits) }
         case 'tick'         { tick(@bits) }
+        case 'stats'        { print $tank }
         else { print_error(); }
     }
 }
 
 sub add {
     my ($thing, $quantity) = @_;
-
+    
+    $thing = lc $thing;
     switch($thing) {
-        case 'food'         { print "add $quantity of food\n" }
-        case 'Clockwork'    { print "add $quantity Clockwork Fish\n" }
-        case 'Pirahna'      { print "add $quantity Pirahna\n" }
-        case 'Sun'          { print "add $quantity Sun Fish\n" }
-        case 'Diver'        { print "add $quantity Diver Fish\n" }
-        case 'Snail'        { print "add $quantity Snail\n" }
+        case 'food'         { add_food($quantity) }
+        case 'clockwork'    { add_creature('Fish::Clockwork', $quantity) }
+        case 'pirahna'      { add_creature('Fish::Pirahna', $quantity) }
+        case 'sun'          { add_creature('Fish::Sun', $quantity) }
+        case 'diver'        { add_creature('Fish::Diver', $quantity) }
+        case 'snail'        { add_creature('Snail', $quantity) }
         else { print_error(); }
+    }
+}
+
+sub add_food {
+    my ($quantity) = @_;
+
+    $tank->food($tank->food + $quantity);
+}
+
+sub add_creature {
+    my ($thing, $quantity) = @_;
+    $quantity = $quantity || 1;
+
+    for (1..$quantity) {
+        my $class = "MoonFruit::Simulator::Creature::$thing";
+        my $creature = $class->new;
+        $tank->add_creature($creature);
     }
 }
 
 sub set_temperature {
     my ($degrees) = @_;
 
+    $tank->temperature($degrees);
     print "Temperature set to $degrees Centigrade\n";
 }
 
 sub set_depth {
     my ($depth) = @_;
+    $tank->depth($depth);
 
     print "Depth of water changed to $depth centimeters\n";
 }
@@ -73,6 +106,7 @@ The available commands are:
         Snail (add <quantity> of Snails)
     temperature <degrees> (Set the temperature in degrees C.)
     depth <cm> (Set the depth of water in centimeters)
+    stats (print the current status of the tank and contents)
     tick <seconds> (Advance the simulation time, in seconds)
 EOTEXT
     return;

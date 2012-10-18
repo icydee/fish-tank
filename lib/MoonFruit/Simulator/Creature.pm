@@ -5,22 +5,38 @@ use Moose;
 has depth => (
     is      => 'rw',
     isa     => 'Int',
+    default => 0,
 );
 
 has eats => (
     is      => 'rw',
     isa     => 'ArrayRef[Any]',
+    default => sub { [] },
 );
 
 has oxygen_hr => (
     is      => 'rw',
     isa     => 'Int',
+    default => 0,
 );
 
 has min_temperature => (
     is      => 'rw',
     isa     => 'Int',
+    default => 0,
 );
+
+has type => (
+    is      => 'ro',
+    isa     => 'Str',
+    default => 'Undefined',
+);
+
+use overload '""' => sub {
+    my ($self) = @_;
+
+    return "  Creature: ".$self->type." current depth ".$self->depth."\n";
+};
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
