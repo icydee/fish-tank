@@ -66,3 +66,15 @@ Clockwork, Piranha, Sun, Diver (fish)
 
 Inherits from Fish
 
+Notes on implementation
+-----------------------
+
+We will run the simplation in 'pseudo real time' so that at each tick of the clock
+each object in the simulation will be processed for the amount of time since the
+previous tick. 
+
+User input
+
+
+
+
