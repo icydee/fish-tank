@@ -1,0 +1,47 @@
+Notes and Assumptions:
+
+The overall description provides a guideline as to how to break down the design.
+
+A Tank - Which is the container in which the simulation is run
+
+Creatures - (Fish or Snails) that occupy the Tank and interact.
+
+A Tank has many Creatures.
+
+A Creature is a generalized Fish or Snail
+
+A Fish is a generalized Clockwork, Pyrahna, Sun or Diver fish.
+
+This suggests the following initial class diagram (attached)
+
+From the description we can give the Class Objects the following attributes.
+
+Tank
+----
+
+Attributes explicitly mention in the description
+  * has-a number of Creatures
+  * has-a quantity of food
+  * has-a temperature
+
+Attributes implied
+  * has-a quantity of oxygen
+  * has-a width
+  * has-a breadth
+  * has-a depth (for this purpose the depth can be considered the depth of the water)
+
+Creature
+--------
+
+Attributes explicitly mentioned in the description
+  * has-a current_depth
+  * has-a food_type
+  * has-a oxygen_requirement
+  * has-a min_temperature_requirement
+
+Attributes that can be implied from the description
+  * has-a life_expectancy
+  * has-a hunger
+  * has-a age
+
+Attributes that are implied may or may not be implemented in this simulation.
