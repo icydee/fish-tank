@@ -10,7 +10,7 @@ A Tank has many Creatures.
 
 A Creature is a generalized Fish or Snail
 
-A Fish is a generalized Clockwork, Pyrahna, Sun or Diver fish.
+A Fish is a generalized Clockwork, Piranha, Sun or Diver fish.
 
 This suggests the following initial class diagram (attached)
 
@@ -34,14 +34,35 @@ Creature
 --------
 
 Attributes explicitly mentioned in the description
-  * has-a current_depth
-  * has-a food_type
-  * has-a oxygen_requirement
-  * has-a min_temperature_requirement
+  * has-a depth (current depth)
+  * has-a eats (array of things it eats)
+  * has-a oxygen_hr (amount of oxygen consumed per hour)
+  * has-a min_temperature (minimum temperature at which it will survive)
+  * has-a status (alive or dead)
 
 Attributes that can be implied from the description
-  * has-a life_expectancy
+  * has-a min_depth
+  * has-a max_depth
   * has-a hunger
+  * has-a food_hr
   * has-a age
+  * has-a life_expentancy
 
-Attributes that are implied may or may not be implemented in this simulation.
+Note: Attributes that are implied may or may not be implemented in this simulation.
+
+
+Snail
+-----
+
+Inherits from Creature.
+
+Fish
+----
+
+Inherits from Creature
+
+Clockwork, Piranha, Sun, Diver (fish)
+-------------------------------------
+
+Inherits from Fish
+
