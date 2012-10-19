@@ -10,6 +10,30 @@ has type => (
     default => 'Sun Fish',
 );
 
+has min_depth => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 0,
+);
+
+has max_depth => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 30,
+);
+
+has oxygen_hr => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 10,
+);
+
+has food_hr => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 50,
+);
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;

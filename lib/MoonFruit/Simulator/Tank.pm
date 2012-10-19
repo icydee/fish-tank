@@ -14,6 +14,12 @@ has food => (
     default => 0,
 );
 
+has oxygen => (
+    is      => 'rw',
+    isa     => 'Int',
+    default => 0,
+);
+
 has temperature => (
     is      => 'rw',
     isa     => 'Int',
@@ -34,6 +40,7 @@ use overload '""' => sub {
     $string .= "  temperature = ".$self->temperature."\n";
     $string .= "  water depth = ".$self->depth."\n";
     $string .= "  fish food   = ".$self->food."\n";
+    $string .= "  oxygen      = ".$self->oxygen."\n";
     $string .= " there are ".scalar(@{$self->creatures})." creatures in the tank\n";
     foreach my $creature (@{$self->creatures}) {
         $string .= $creature;
@@ -47,6 +54,18 @@ sub add_creature {
     my $creatures = $self->creatures;
     push @$creatures, $creature;
     $self->creatures($creatures);
+}
+
+sub tick {
+    my ($self, $seconds) = @_;
+
+    print "Tick the tank\n";
+    foreach my $creature (@{$self->creatures}) {
+        $creature->tick({
+            tank    => $self,
+            seconds => $seconds,
+        });
+    }
 }
 
 no Moose;
@@ -78,6 +97,10 @@ An reference to an array of Creatures that inhabit the tank.
 
 The current quantity of food (excluding fish and snails being considered to be food)
 
+=head3 oxygen
+
+The current amount of oxygen in the tank.
+
 =head3 temperature
 
 The current temperature of the water in the tank (probably measured in Centegrade)
@@ -91,6 +114,14 @@ The current depth of the water in the tank (let's assume it is centimeters)
 =head3 add_creature
 
 Add a single creature object to the tank.
+
+ $tank->add_creature($sun_fish);
+
+=head3 tick
+
+Tick the simulation of the tank by the specified number of B<seconds>
+
+ $tank->tick(60);
 
 =head1 JOKE
 

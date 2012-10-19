@@ -10,6 +10,42 @@ has type => (
     default => 'Pirahna Fish',
 );
 
+has oxygen_hr => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 50,
+);
+
+has food_hr => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 100,
+);
+
+has min_depth => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 0,
+);
+
+has max_depth => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 1000,
+);
+
+has min_temperature => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 15,
+);
+
+after 'dies' => sub {
+    my $self = shift;
+
+    $self->depth(0);
+};
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;
@@ -46,7 +82,10 @@ Defaults to 15 (degrees Centigrade), but allows it to be specified to allow for 
 
 =head1 METHODS
 
-TBD
+=head2 dies
+
+When a Pirahna dies, it floats to the surface. For the purpose of the simulation we will assume
+that it floats to the top instantaniously.
 
 =head1 AUTHORS
 

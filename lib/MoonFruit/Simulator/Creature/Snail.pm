@@ -10,6 +10,19 @@ has type => (
     default => 'Snail',
 );
 
+has min_depth => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 0,
+);
+
+has max_depth => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 1000,
+);
+
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;

@@ -10,6 +10,30 @@ has type => (
     default => 'Diver Fish',
 );
 
+has min_depth => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 50,
+);
+
+has max_depth => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 1000,
+);
+
+has oxygen_hr => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 30,
+);
+
+has food_hr => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 75,
+);
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;

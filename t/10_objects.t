@@ -41,6 +41,26 @@ foreach my $creature_class ('Snail','Fish::Diver','Fish::Pirahna','Fish::Sun','F
 is(scalar @{$tank->creatures}, 5, "We have added five creatures");
 
 
+$tank = MoonFruit::Simulator::Tank->new({
+    depth       => 100,
+    temperature => 20,
+    food        => 1000,
+    oxygen      => 1000,
+});
+
+# Test to ensure Clockwork fish don't consume food or oxygen
+
+my $fish = MoonFruit::Simulator::Creature::Fish::Clockwork->new;
+
+$tank->add_creature($fish);
+
+$tank->tick(100);
+
+is($tank->depth, 100, "Clockwork fish don't consume water");
+is($tank->temperature, 20, "Clockwork fish don't change the water temperature");
+is($tank->food, 1000, "Clockwork fish don't consume food");
+is($tank->oxygen, 1000, "Clockwork fish don't breath");
+
 done_testing;
 exit;
 

@@ -42,6 +42,7 @@ sub add {
     $thing = lc $thing;
     switch($thing) {
         case 'food'         { add_food($quantity) }
+        case 'oxygen'       { add_oxygen($quantity) }
         case 'clockwork'    { add_creature('Fish::Clockwork', $quantity) }
         case 'pirahna'      { add_creature('Fish::Pirahna', $quantity) }
         case 'sun'          { add_creature('Fish::Sun', $quantity) }
@@ -54,13 +55,27 @@ sub add {
 sub add_food {
     my ($quantity) = @_;
 
+    $quantity = $quantity || 1;
+
+    print "Added $quantity of fish food\n";
     $tank->food($tank->food + $quantity);
+}
+
+sub add_oxygen {
+    my ($quantity) = @_;
+
+    $quantity = $quantity || 1;
+
+    print "added $quantity of oxygen\n";
+
+    $tank->oxygen($tank->oxygen + $quantity);
 }
 
 sub add_creature {
     my ($thing, $quantity) = @_;
     $quantity = $quantity || 1;
 
+    print "Added $quantity of $thing\n";
     for (1..$quantity) {
         my $class = "MoonFruit::Simulator::Creature::$thing";
         my $creature = $class->new;
@@ -85,7 +100,10 @@ sub set_depth {
 sub tick {
     my ($time) = @_;
 
+    $time = $time || 1;
+
     print "Tick the clock by $time seconds\n";
+    $tank->tick($time);
 }
 
 sub print_error {
@@ -99,7 +117,8 @@ The available commands are:
     exit (exits the program)
     add <thing> <quantity> (Add a number of items)
       <thing> can be one of
-        food (add fish food)
+        food (add <quantity> of fish food)
+        oxygen (add <quantity> of oxygen)
         Pirahna (add <quantity> of Pirahna Fish)
         Sun (add <quantity> of Sun Fish)
         Diver (add <quantity> of Diver Fish)
