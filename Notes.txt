@@ -12,7 +12,7 @@ A Creature is a generalized Fish or Snail
 
 A Fish is a generalized Clockwork, Piranha, Sun or Diver fish.
 
-This suggests the following initial class diagram (attached)
+This suggests the class diagram (see rough diagram in simulation.pdf)
 
 From the description we can give the Class Objects the following attributes.
 
@@ -74,6 +74,12 @@ each object in the simulation will be processed for the amount of time since the
 previous tick. 
 
 User input
+
+The user interface will be a simple command line program, A single command can be input
+with minimum error checking. Attributes of the tank can be modified, creatures can be
+added and the current status of the tank and contents can be interrogated.
+
+For further details of the input/output see bin/run.pl help text.
 
 
 
